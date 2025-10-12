@@ -1,0 +1,204 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates an IAM managed policy to be used as a Permission Boundary for users.",
+    "Resources": {
+        "UserPermissionBoundary": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "ManagedPolicyName": "UserPermissionBoundary",
+                "Path": "/",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "S3Sandbox",
+                            "Effect": "Allow",
+                            "Action": "s3:*",
+                            "Resource": "*"
+                        },
+                        {
+                            "Sid": "Ec2RestrictedSandbox",
+                            "Effect": "Allow",
+                            "Action": [
+                                "ec2:*",
+                                "iam:PassRole",
+                                "iam:ListRoles",
+                                "iam:CreateServiceLinkedRole"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "StringEqualsIfExists": {
+                                    "ec2:InstanceType": [
+                                        "t2.micro",
+                                        "t3.micro",
+                                        "t3.small",
+                                        "t3.medium"
+                                    ],
+                                    "ec2:VolumeType": [
+                                        "gp2",
+                                        "gp3"
+                                    ]
+                                },
+                                "StringEquals": {
+                                    "aws:RequestedRegion": "us-east-1"
+                                },
+                                "NumericLessThanEqualsIfExists": {
+                                    "ec2:VolumeSize": "30"
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "RDSRestrictedSandbox",
+                            "Effect": "Allow",
+                            "Action": [
+                                "rds:*",
+                                "iam:PassRole",
+                                "iam:ListRoles",
+                                "iam:CreateServiceLinkedRole"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "StringEqualsIfExists": {
+                                    "aws:RequestedRegion": "us-east-1",
+                                    "rds:DatabaseEngine": "mysql",
+                                    "rds:DatabaseClass": "db.t3.micro"
+                                },
+                                "NumericLessThanEqualsIfExists": {
+                                    "rds:StorageSize": "20"
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "IAMCreateReadOnlyUsers",
+                            "Effect": "Allow",
+                            "Action": [
+                                "iam:AttachUserPolicy",
+                                "iam:CreateUser",
+                                "iam:UpdateUser"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "StringLikeIfExists": {
+                                    "iam:PolicyARN": [
+                                        "arn:aws:iam::aws:policy/*ReadOnlyAccess",
+                                        "arn:aws:iam::aws:policy/*ReadOnly"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "AllowRoleCreationForSandboxServices",
+                            "Effect": "Allow",
+                            "Action": [
+                                "iam:CreateRole",
+                                "iam:AttachRolePolicy",
+                                "iam:PutRolePolicy",
+                                "iam:CreatePolicy",
+                                "iam:CreateServiceLinkedRole",
+                                "iam:PassRole"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "StringLikeIfExists": {
+                                    "iam:AWSServiceName": [
+                                        "ec2.amazonaws.com",
+                                        "rds.amazonaws.com",
+                                        "s3.amazonaws.com",
+                                        "iam.amazonaws.com",
+                                        "vpc.amazonaws.com",
+                                        "elasticbeanstalk.amazonaws.com",
+                                        "dynamodb.amazonaws.com",
+                                        "ecr.amazonaws.com",
+                                        "ecs.amazonaws.com",
+                                        "cloudwatch.amazonaws.com",
+                                        "kms.amazonaws.com",
+                                        "lambda.amazonaws.com",
+                                        "codepipeline.amazonaws.com",
+                                        "codebuild.amazonaws.com"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "IAMExplicitDenyFullAdmin",
+                            "Effect": "Deny",
+                            "Action": [
+                                "iam:CreateRole",
+                                "iam:AttachRolePolicy",
+                                "iam:PutRolePolicy",
+                                "iam:AttachUserPolicy",
+                                "iam:PutUserPolicy"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "StringLike": {
+                                    "iam:PolicyARN": [
+                                        "arn:aws:iam::aws:policy/AdministratorAccess",
+                                        "arn:aws:iam::aws:policy/*FullAccess",
+                                        "arn:aws:iam::aws:policy/Administrator*",
+                                        "arn:aws:iam::aws:policy/*AdminAccess",
+                                        "arn:aws:iam::aws:policy/*PowerUserAccess",
+                                        "arn:aws:iam::aws:policy/*PowerUser"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "SandboxFullAccessServices",
+                            "Effect": "Allow",
+                            "Action": [
+                                "elasticbeanstalk:*",
+                                "cloudwatch:*",
+                                "logs:*",
+                                "dynamodb:*",
+                                "kms:*",
+                                "lambda:*",
+                                "codepipeline:*",
+                                "codebuild:*"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "StringEqualsIfExists": {
+                                    "aws:RequestedRegion": "us-east-1"
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "SandboxFullAccessECRandECS",
+                            "Effect": "Allow",
+                            "Action": [
+                                "ecr:*",
+                                "ecs:*"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
+                            "Sid": "DenyActions",
+                            "Effect": "Deny",
+                            "Action": [
+                                "iam:AttachGroupPolicy",
+                                "iam:AttachRolePolicy",
+                                "iam:AttachUserPolicy",
+                                "iam:PutGroupPolicy",
+                                "iam:PutRolePolicy",
+                                "iam:PutUserPolicy",
+                                "iam:DetachGroupPolicy",
+                                "iam:DetachRolePolicy",
+                                "iam:DetachUserPolicy",
+                                "iam:AddUserToGroup",
+                                "iam:RemoveUserFromGroup",
+                                "iam:PutUserPermissionsBoundary",
+                                "iam:PutRolePermissionsBoundary"
+                            ],
+                            "Resource": [
+                                "arn:aws:iam::*:user/dev-admin",
+                                "arn:aws:iam::*:group/Admins",
+                                "arn:aws:iam::*:role/OrganizationAccountAccessRole"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
