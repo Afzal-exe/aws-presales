@@ -10,12 +10,13 @@ Follow the steps below to access and utilize the sandbox environment effectively
 
 ### 1. Sign In to the CloudLabs Environment
 
-1. Launch the lab and navigate to the **Environment Details** tab.
-2. Copy the credentials provided below to sign in to the sandbox:
+1. Sign in to the AWS Management Console by copying the **Sign-in link, Username, and Password** provided below.
 
-   * **Sign-in Link**: **<inject key="SignInUrl" enableCopy="true" />**
-   * **Username**: **<inject key="UserName" enableCopy="true" />**
-   * **Password**: **<inject key="Password" enableCopy="true" />**
+    * **Sign-in Link**: **<inject key="SignInUrl" enableCopy="true" />**
+
+    * **IAM Username**: **<inject key="UserName" enableCopy="true" />**
+
+    * **Password**: **<inject key="Password" enableCopy="true" />**
 
    ![](/media/login.png)
 
