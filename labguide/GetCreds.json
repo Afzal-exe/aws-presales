@@ -1,0 +1,73 @@
+{
+  "Parameters": {
+    "CloudLabsDeploymentID": {
+      "Type": "String"
+    },
+    "AccountId": {
+      "Type": "String"
+    },
+    "userName": {
+      "Type": "String"
+    },
+    "password": {
+      "Type": "String"
+    }
+  },
+  "Conditions": {
+    "Never": {
+      "Fn::Equals": [
+        "a",
+        "b"
+      ]
+    }
+  },
+  "Resources": {
+    "NullResource": {
+      "Type": "Custom::Null",
+      "Condition": "Never"
+    }
+  },
+  "Outputs": {
+    "CloudLabsDeploymentID": {
+      "Description": "DeploymentID Value",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "s3b-",
+            {
+              "Ref": "CloudLabsDeploymentID"
+            }
+          ]
+        ]
+      }
+    },
+    "SignInUrl": {
+      "Description": "Sign in URL",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "AccountId"
+            },
+            ".signin.aws.amazon.com/console/"
+          ]
+        ]
+      }
+    },
+    "UserName": {
+      "Description": "username",
+      "Value": {
+        "Ref": "userName"
+      }
+    },
+    "Password": {
+      "Description": "password",
+      "Value": {
+        "Ref": "password"
+      }
+    }
+  }
+}
