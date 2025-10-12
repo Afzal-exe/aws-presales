@@ -2,7 +2,7 @@
 
 Before starting your testing activities, kindly note that the **lab duration** will be displayed at the top right corner of your lab environment page once you click the **Launch Lab** button. The timer will start automatically, so please keep track of your remaining time while working in the sandbox.
 
-![](/media/labdurationv2ui.png)
+![](../media/labdurationv2ui.png)
 
 Follow the steps below to access and utilize the sandbox environment effectively.
 
@@ -18,11 +18,11 @@ Follow the steps below to access and utilize the sandbox environment effectively
 
     * **Password**: **<inject key="Password" enableCopy="true" />**
 
-   ![](/media/login.png)
+   ![](../media/login.png)
 
    Alternatively, you can access the same details from the **CloudLabs** interface as shown below.
 
-   ![](/media/signin.png)
+   ![](../media/signin.png)
 
 ---
 
@@ -30,7 +30,7 @@ Follow the steps below to access and utilize the sandbox environment effectively
 
 After signing in, choose the region **US-EAST-1 (N. Virginia)** from the region selector at the top-right corner of the AWS Management Console.
 
-![](/media/selectregion.png)
+![](../media/selectregion.png)
 
 > **Note:**
 > The sandbox environment is configured primarily for the **US-EAST-1 (N. Virginia)** region.
