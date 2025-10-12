@@ -1,0 +1,13 @@
+[
+    {
+      "Name": "AWS Sandbox",
+      "Language": "English",
+      "BaseURL": "https://github.com/Afzal-exe/aws-presales/new/main/labguide",
+      "Files": [
+        {
+          "RawFilePath": "https://docs-api.cloudlabs.ai/repos/raw.githubusercontent.com/CloudLabsAI-Azure/AustinCC/main/RDS/GettingStarted.md",
+          "Order": 1
+        }
+      ]
+    }
+  ]
