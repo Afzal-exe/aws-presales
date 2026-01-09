@@ -1,4 +1,4 @@
-# CloudLabs Demo for []: 
+# UFL Demo: Terraform
 
 ## Overview
 This lab environment has a Windows Virtual machine with all the necessary tools pre-installed.
