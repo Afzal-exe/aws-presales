@@ -1,0 +1,13 @@
+[
+  {
+    "Name": "CloudLabs Demo for : Windows",
+    "Language": "English",
+    "BaseURL": "https://github.com/Afzal-exe/aws-presales/tree/main/labguide",
+    "Files": [
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/Afzal-exe/aws-presales/refs/heads/main/labguide/GettingStarted001.md",
+        "Order": 1
+      }
+    ]
+  }
+]
