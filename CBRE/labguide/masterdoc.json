@@ -1,0 +1,17 @@
+[
+    {
+      "Name": "AWS Sandbox",
+      "Language": "English",
+      "BaseURL": "https://github.com/CloudLabsAI-Azure/Azure-Cloud-Sandbox/refs/heads/main/",
+      "Files": [
+        {
+          "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Azure-Cloud-Sandbox/refs/heads/main/AWS-Sandbox/labguide/GettingStarted.md",
+          "Order": 1
+        },
+        {
+          "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/Azure-Cloud-Sandbox/refs/heads/main/AWS-Sandbox/labguide/userGuide.md",
+          "Order": 2
+        }
+      ]
+    }
+  ]
